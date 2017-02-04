@@ -9,12 +9,13 @@ import java.net.Socket;
 import Socket.SocketServer;
 import radiusclients.Radiusclients;
 import AddUser.AddUser;
+import java.sql.SQLException;
 /**
  *
  * @author ZORO
  */
 public class Main {
-    public static void main(String [] args) throws IOException{
+    public static void main(String [] args) throws IOException, SQLException{
          ServerSocket serverSocket = null;
         Socket socket = null;
         AddUser x =new AddUser();

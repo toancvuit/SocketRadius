@@ -5,7 +5,11 @@
  */
 package AddUser;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,14 +24,34 @@ public class AddUser {
     private int timeOUt;
     private String url;
     private Connection connection;
-    public AddUser(){
+    public AddUser() throws SQLException {
+        Statement stmt = null;
+        ResultSet rs = null;
         try {
-            System.out.println("Connecting database...");
-            String aurl = "jdbc:mysql://192.168.140.133:3306/radiusdb";
-            this.connection = DriverManager.getConnection(aurl, "radiususer", "radiuspass");
-            System.out.println("Connect Success!");
-        } catch (SQLException ex) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+            } catch (InstantiationException ex) {
+                Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
         }
+               
+        System.out.println("Connecting database...");
+        this.url = "jdbc:mysql://192.168.140.133:3306/radiusdb";
+        this.connection = DriverManager.getConnection(this.url,"radiususer","radiuspass");
+        //                Class.forName("com.mysql.jdbc.Driver").newInstance();
+        System.out.println("Connect Success!");
+        stmt = this.connection.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM radcheck");
+        while(rs.next()){
+            System.out.println(rs.getString("username"));
+            
+        }
+        
+
+        } 
 }
-}
+

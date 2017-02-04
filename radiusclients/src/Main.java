@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import Socket.SocketServer;
 import radiusclients.Radiusclients;
+import AddUser.AddUser;
 /**
  *
  * @author ZORO
@@ -16,7 +17,7 @@ public class Main {
     public static void main(String [] args) throws IOException{
          ServerSocket serverSocket = null;
         Socket socket = null;
-
+        AddUser x =new AddUser();
         serverSocket = new ServerSocket(1814);
         while (true) {
             try {

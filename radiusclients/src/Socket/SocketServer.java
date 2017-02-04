@@ -10,7 +10,8 @@ public class SocketServer extends Thread
    public SocketServer(Socket clientSocket) throws IOException
    {
       socket = clientSocket;
-      socket.setSoTimeout(5000);
+      //socket.setSoTimeout(5000);
+      System.out.print("Client Connect!" + socket.getInetAddress() + " port:"+ socket.getPort());
       this.messagChange = false;
       this.authenMessage = null;
    }
@@ -30,6 +31,7 @@ public class SocketServer extends Thread
         String key;
         while (true) {
             try {
+                System.out.print("Waiting to get input from client");
                 key = brinp.readLine();
                 switch(key.toUpperCase()) {
                     case "QUIT":    
@@ -37,8 +39,9 @@ public class SocketServer extends Thread
                         break;
                     case "SENDDATA":
                         String data;
-                        out.writeBytes("READY");
+                        out.writeBytes("READY" + '\n');
                         out.flush();
+                        System.out.println("Wait Client send data");
                         data = brinp.readLine();
                         if ( data.indexOf("UserName:")!=0 && data.indexOf("Password:")!= 0 ) {
                             this.authenMessage = data;
@@ -51,6 +54,7 @@ public class SocketServer extends Thread
                         
                         
                 }
+                System.out.print("Terminal Client");
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
